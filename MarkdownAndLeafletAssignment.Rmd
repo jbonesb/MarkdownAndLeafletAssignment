@@ -1,0 +1,30 @@
+---
+title: "Markdown and Leaflet"
+author: "Sergey Bogdanov"
+date: '31/03/2019'
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(leaflet)
+```
+
+## My home region at 31.03.2019
+
+```{r myTowns, message=F}
+md_cities <- data.frame(name = c("Moscow, place where I'm living now", 
+                                 "Ivanteevka, the city of my youth", 
+                                 "Sergiev Posad, the city where I was born", 
+                                 "Lazarevo, the village of my childhood"),
+            pop = c(12615882, 76616, 103444, 98),
+            lat = c(55.75222, 55.97111, 56.30000, 56.334080),
+            lng = c(37.61556, 37.92083, 38.13333, 37.960747))
+md_cities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight = 1, radius = sqrt(md_cities$pop)*5, popup = md_cities$name,
+             color = c("blue", "red", "yellow", "green")) %>%
+  addLegend(labels = c("Moscow", "Ivanteevka", "Sergiev Posad", "Lazarevo"), 
+            colors = c("blue", "red", "yellow", "green"))
+```
